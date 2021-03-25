@@ -6,8 +6,12 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.0]
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
-      t.string :affiliation,        null: false, default: ""
-      t.string :position,            null: false, default: ""
+      t.text :affiliation, null: false
+      t.text :position, null: false
+      t.string :name, null: false
+      t.text :profile, null: false
+      ##migrate失敗した場合はrails db:migrate:statusで状況を見てそこからdb:migrate:resetでリセットできる
+
 
       ## Recoverable
       t.string   :reset_password_token
