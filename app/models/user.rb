@@ -9,5 +9,6 @@ class User < ApplicationRecord
   validates :affiliation, presence: true
   validates :position, presence: true
 
-  has_many :protoypes
+  has_many :prototypes
+  has_many :comments
 end
