@@ -1,7 +1,9 @@
 class PrototypesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :isloggedin, only: [:edit, :destroy, :update]
+  before_action :isloggedin, only: [:edit, :update, :destroy]
   
+
+
   def index
     @prototypes = Prototype.all
   end
@@ -26,11 +28,9 @@ class PrototypesController < ApplicationController
   end
 
   def edit
-    @prototype = Prototype.find(params[:id])
   end
   
   def update
-    @prototype = Prototype.find(params[:id])
     if @prototype.update(prototype_params)
       redirect_to prototype_path(@prototype)
     else
@@ -39,7 +39,6 @@ class PrototypesController < ApplicationController
   end
 
   def destroy
-    @prototype = Prototype.find(params[:id])
     if @prototype.destroy
       redirect_to root_path
     else
@@ -57,8 +56,8 @@ class PrototypesController < ApplicationController
   def prototype_params
     params.require(:prototype).permit(:title, :catch_copy, :concept, :image).merge(user_id: current_user.id)
   end
-
   def isloggedin
-    redirect_to root_path unless current_user == @prototype.user
+    @prototype = Prototype.find(params[:id])
+    redirect_to action: :index unless current_user.id == @prototype.user_id
   end
 end
